@@ -1,0 +1,19 @@
+{% extends 'house/house_list.html' %}
+{% load static %}
+
+{% block title %}
+<title>house Deleted</title>
+{% endblock %}
+
+{%block content %}
+<div style="padding-top: 150px;padding-left: 50px;">
+    <h3>You have deleted house. If you want to see the
+        {% if user_type == 'estate_person' %}
+            <a href="{% url 'house_list' %}">house list</a>
+        {% endif %}
+        {% if user_type == 'admin' %}
+            <a href="{% url 'total_house_list' %}">house list</a>
+        {% endif %}
+    </h3>
+</div>
+{% endblock %}

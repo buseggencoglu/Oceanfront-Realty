@@ -1,0 +1,94 @@
+{% load static %}
+
+<header class="header_section">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="">
+            </a>
+            {% if user.is_authenticated %}
+                <p>Welcome! <a href="{% url 'profile' pk=user.id %}">{{ user.username }}</a></p>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                    <ul class="navbar-nav  ">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">
+                                Home
+                            </a>
+                        </li>
+
+                        {% if user.is_authenticated %}
+                            {% if user_type == 'estate_person' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'house_list' %}">
+                                        Control Panel
+                                    </a>
+                                </li>
+
+                            {% endif %}
+
+                            {% if user_type == 'admin' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'total_house_list' %}">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'branch_list' %}">
+                                        Branches
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if user_type == 'customer' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reservations/customer">
+                                        Reservations
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if user_type == 'estate_person' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reservations/housedealer">
+                                        Reservations
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if user_type == 'admin' %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reservations/admin">
+                                        Reservations
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'profile' pk=user.id %}">
+                                    Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">
+                                    Logout
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">
+                                    Login
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

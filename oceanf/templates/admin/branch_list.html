@@ -1,0 +1,38 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+<title>Branch List</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col">
+
+<h4 style="font-family: 'Times New Roman'; color: #8dca67">Branchs on The System</h4>
+<div style="width: 149px;">
+    <a href="{% url 'add_branch' %}"><button type="submit" class="btn btn-secondary mb-3 crt-btn button4" style="padding: 1em 1.5em">Add Branch</button></a>
+</div>
+<table class="table mb-3 table-hover table-striped">
+    <thead>
+    <th>Branch Name</th>
+    <th>Location</th>
+    <th></th>
+    <th></th>
+    </thead>
+    {% for data in dataset %}
+    <tr>
+       <td><a href="{% url 'branch_house_list' pk=data.id  %}">{{data.branch_name}}</a></td>
+
+        <td>{{data.branch_location}}</td>
+        <td>
+            <a href="{% url 'branch_update' pk=data.id %}"><button type="submit" class="btn btn-info">Update</button></a>
+        </td>
+        <td>
+            <a href="{% url 'branch_delete' pk=data.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}

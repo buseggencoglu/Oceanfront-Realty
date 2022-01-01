@@ -1,0 +1,172 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Profile</title>
+</head>
+<html>
+<body>
+<style>
+    body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #F5F5F5;
+    font-family: "poppins", sans-serif;
+}
+.main-body {
+    padding: 15px;
+}
+.housed {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.housed {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.housed-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+</style>
+<div class="container">
+    <form method="POST">
+    <div class="main-body">
+     {% csrf_token %}
+
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
+          </nav>
+
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="housed">
+                <div class="housed-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4><b>{{user.username}}</b> </h4>
+                      <p class="text-secondary mb-1"> {{profile.user.type}}</p>
+                        <a><button type="submit" class="btn btn-info" href="{% url 'profile' pk=user.id %}">Save</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="housed mt-3">
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="housed mb-3">
+                <div class="housed-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>USERNAME</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                     {{user.username}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>FIRST NAME</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                     {{form.first_name}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>LAST NAME</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{form.last_name}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>E-MAIL</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{form.email}}
+                    </div>
+                    <hr>
+                  </div>
+                    <hr>
+                     {% if user_type == 'customer' %}
+                     <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>BIRTH DATE</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.customer.birthDate}}
+                    </div>
+                         {% endif %}
+                          <hr>
+                         </div>
+                           <hr>
+                      {% if user_type == 'customer' %}
+                     <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><b>LICENSE ID</b></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.customer.licenseId}}
+                    </div>
+                          <hr>
+                         {% endif %}
+                     </div>
+                </div>
+              </div>
+            </div>
+         </div>
+
+      </div>
+    </form>
+  </div>
+ </body>
+</html>
+{% endblock %}

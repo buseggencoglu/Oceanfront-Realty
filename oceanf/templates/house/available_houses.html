@@ -1,0 +1,49 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+    <title>house List</title>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-row">
+            <span>{{ location }}</span> ---
+            <span>{{ pickUpDate }} - {{ returnDate }}</span>
+        </div>
+        <table class="table mb-3 table-hover table-striped">
+            <thead>
+            <th>Image</th>
+            <th>House Name</th>
+            <th>Type</th>
+            <th>Rooms</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th></th>
+            </thead>
+            {% for data in houses %}
+                <form action="/reservations/{{ data.id }}/{{ location }}/{{ pickUpDate }}/{{ returnDate }}"
+                      type="post">
+                    <tr>
+                        <td>{% if data.image %}<img src="{{data.image.url}}" height="150" width="150">{% endif %}</td>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.type }}</td>
+                        <td>{{ data.rooms }}</td>
+                        <td>{{ data.price }}</td>
+                        <td>{{ data.description }}</td>
+                        <td>{{ data.status }}</td>
+                       {% if user_type == 'estate_person' or user_type == 'customer' %}
+                        <td>
+                            <button type="submit" class="btn btn-secondary">
+                                Reserve
+                            </button>
+                        </td>
+                       {% endif %}
+                    </tr>
+                </form>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

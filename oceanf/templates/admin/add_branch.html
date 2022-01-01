@@ -1,0 +1,35 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+<title>Add Branch</title>
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div style="margin-top : 100px ;margin-left : 100px; margin-right: 100px;">
+    {% load crispy_forms_tags %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h3 class="m-0">Add Branch</h3>
+            </div>
+        </div>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">AddBranch</button>
+    </form>
+</div>
+
+{%block results%}
+{%endblock%}
+
+
+{% endblock %}
+
+
+
+
+

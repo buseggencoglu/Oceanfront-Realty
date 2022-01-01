@@ -1,0 +1,14 @@
+{% extends 'layout/main.html' %}
+
+{% block content %}
+
+<div style="padding-top: 150px;">
+    <i class="fas fa-check-circle font-size-27"></i>
+    {% if user_type == 'customer' %}
+    <h3>Your account created successfully!</h3>
+    {% else %}
+    <h3>Your account created successfully! Wait for the admin to prove your account.</h3>
+    {% endif %}
+</div>
+
+{% endblock %}

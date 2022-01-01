@@ -1,0 +1,40 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Reservations</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="col">
+    <a href="/reservations/admin"> <button class="btn-hist btn-2 mb-3">
+        <p>Switch for Current</p>
+     </button></a>
+
+<table class="table mb-3 table-hover table-striped">
+    <thead>
+        <th>House</th>
+        <th>Customer</th>
+        <th>location</th>
+        <th>pickUpDate</th>
+        <th>returnDate</th>
+        <th>paymentStatus</th>
+    </thead>
+    {% for data in dataset %}
+    <tr>
+        <td>{{data.house.name}}</td>
+        {% if data.customer.user.username == None %}
+            <td>{{data.customer_name}}</td>
+        {% else %}
+           <td>{{data.customer.user.username}}</td>
+        {% endif %}
+        <td>{{data.location}}</td>
+        <td>{{data.pickUpDate}}</td>
+        <td>{{data.returnDate}}</td>
+        <td>{{data.paymentStatus}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}

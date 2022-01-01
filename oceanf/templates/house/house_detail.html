@@ -1,0 +1,10 @@
+{% include 'layout/main.html' %}
+{% load static %}
+
+{% block content %}
+    {% for house in houses %}
+        {{ house }}
+    {% endfor %}
+    <hr>
+    {{ house_details }}
+{% endblock %}

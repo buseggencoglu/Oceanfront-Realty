@@ -1,0 +1,152 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Dashboard</title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column mr-5">
+                <h4 style="font-family:'Times New Roman'; color: #8dca67">Waited Estate List</h4>
+                <div class="cd-appr-table table rounded" style="border: 2px darkslategrey solid; width: 100%">
+                    <table class="col align-self-center">
+                        <thead>
+                        <th>Estate</th>
+                        <th>Branch</th>
+                        <th class="text-center" colspan="2">Approval</th>
+                        </thead>
+
+                        {% for i in house_dealers %}
+                            <tr>
+                                <td>{{ i.user.username }}</td>
+
+                                <form class="w-75" action="/admin/user/approve/{{ i.id }}" type="post">
+                                    {% csrf_token %}
+                                    <td>
+                                        {{ branch_form | crispy }}
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success">Approve</button>
+                                    </td>
+                                </form>
+                                <td><a href="/admin/user/delete/{{ i.id }}">
+                                    <button type="button" class="btn btn-danger">reject</button>
+                                </a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="mr-5">
+                <h4 style="font-family: 'Times New Roman';color: #8dca67">houseDealers on The System</h4>
+                <div class="cd-appr-table table rounded" style="border: 2px darkslategrey solid; width: 100%;">
+                    <table class="col align-self-center">
+                        <thead>
+                        <th>Name</th>
+                        <th>Branch Name</th>
+                        </thead>
+
+                        {% for data in house_dealers_dataset %}
+                        <tr>
+                            <td>{{data.user.username}}</td>
+                            <td>{{data.branch.branch_name}}</td>
+                            <td>
+                                <a href="{% url 'houseDealer_delete' pk=data.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-family:'Times New Roman'; color: #8dca67">Sale Graph</h4>
+                <div class="cd-appr-table table rounded" style="border: 2px darkslategrey solid; width: 100%">
+                    <div id="container">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="house-table-admin">
+            <h4 style="font-family: 'Times New Roman'; color: #8dca67">houses on The System</h4>
+
+            <div style="width: 200px;">
+                <a href="{% url 'create_house' %}"><button type="submit" class="btn btn-secondary mb-3 crt-btn button4">Create house</button></a>
+            </div>
+
+            <div class="house-table rounded">
+                <table class="table table-hover table-striped rounded" >
+                    <thead>
+                    <th>Image</th>
+                    <th>House Name</th>
+                    <th>Type</th>
+                    <th>Rooms</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                    </thead>
+                    {% for data in houses %}
+                        <tr>
+                            <td>{% if data.image %}<img src="{{ data.image.url }}" height="150" width="150">{% endif %}
+                            </td>
+                            <td>{{ data.name }}</td>
+                            <td>{{ data.type }}</td>
+                            <td>{{ data.rooms }}</td>
+                            <td>{{ data.price }}</td>
+                            <td>{{ data.description }}</td>
+                            <td>{{ data.status }}</td>
+                            <td>
+                                <a href="{% url 'house_update' pk=data.id %}"><button type="submit" class="btn btn-info">Update</button></a>
+                            </td>
+                            <td>
+                                <a href="{% url 'house_delete' pk=data.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: {{ data|safe }},
+                    label: 'Sales'
+                }],
+                labels: {{ labels|safe }}
+            },
+
+            options: {
+                plugins: {
+                    colorschemes: {
+                        scheme: 'brewer.Paired12'
+                    }
+                },
+                responsive: true
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('pie-chart').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        };
+
+    </script>
+
+{% endblock %}

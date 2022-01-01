@@ -1,0 +1,17 @@
+{% extends 'admin/branch_list.html' %}
+{% load static %}
+
+{% block title %}
+<title>Branch Deleted</title>
+{% endblock %}
+
+{%block content %}
+<div style="padding-top: 150px;padding-left: 50px;">
+    <h3>You have deleted branch. If you want to see the
+        {% if user_type == 'admin' %}
+            <a href="{% url 'branch_list' %}">branch list</a>
+        {% endif %}
+        {{branch.branch_name}}
+    </h3>
+</div>
+{% endblock %}

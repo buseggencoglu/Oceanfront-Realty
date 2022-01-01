@@ -1,0 +1,52 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+<title>MyReservations</title>
+{% endblock %}
+
+
+{% block content %}
+  <div class="col">
+     <h5 style="color: #8f908f; font-family: 'Times New Roman'">{{ user.username }} reservations' history</h5>
+
+      {% if user_type == 'customer' %}
+     <a href="/reservations/customer"> <button class="btn-hist btn-2 mb-3">
+        <p>Switch for Current</p>
+     </button></a>
+         {% elif user_type == 'estate_person' %}
+          <a href="/reservations/housedealer"> <button class="btn-hist btn-2 mb-3">
+             <p>Switch for Current</p>
+          </button></a>
+         {% else %}
+     {% endif %}
+
+     <table class="table mb-3 table-hover table-striped">
+
+
+    <tr>
+        <th>Plate</th>
+        <th>house</th>
+         {% if user_type == 'estate_person' %}<th>Username</th>{% endif %}
+        <th>Pick-Up Location</th>
+        <th>Pick-Up Date</th>
+        <th>Return Date</th>
+        <th>Payment Status</th>
+    </tr>
+    {% for r in reservation_history %}
+    <tr>
+        <td>{{ r.house.plate }}</td>
+        <td>{{ r.house.name }}</td>
+        {% if user_type == 'estate_person'%}<td>{{r.customer.user.username}}{{ r.customer_name }}</td>{% endif %}
+        <td>{{r.location }}</td>
+        <td>{{ r.pickUpDate }}</td>
+        <td>{{ r.returnDate }}</td>
+        <td>{{ r.paymentStatus }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+  </div>
+
+{% endblock %}

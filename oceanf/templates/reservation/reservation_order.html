@@ -1,0 +1,25 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    <title>Order</title>
+{% endblock %}
+
+{% block content %}
+    <form class="w-75" action="/reservation/approve" type="get">
+        {% csrf_token %}
+        {{ reservation_form | crispy }}
+        {% if user_type == 'customer' %}
+            <h1 class="mt-3" style="font-family: 'Times New Roman'">Final Step!</h1>
+            <i style="font-family: 'Times New Roman'">Please, enter your informations correctly</i>
+            {{ housed_form | crispy }}
+        {% endif %}
+        {% if user_type == 'estate_person' %}
+            <label for="customer_name" >Customer Name</label>
+            <input required class="form-control" name="customer_name"/>
+        {% endif %}
+        <button type="submit" onclick="this.disabled=true;this.form.submit();" class="btn btn-primary mt-5 mb-5" style="background-color: #8dca67">
+            Finish Reservation
+        </button>
+    </form>
+{% endblock %}

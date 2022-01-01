@@ -1,0 +1,19 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Reservation Approve</title>
+{% endblock %}
+{% block content %}
+    {% if status %}
+        <div class="d-flex flex-row align-items-center">
+            <i class="fas fa-check-circle font-size-27"></i>
+            <span class="font-weight-bolder font-size-27 ml-2">Successfully Reserved!</span>
+        </div>
+    {% else %}
+        <div class="d-flex flex-row align-items-center">
+            <i class="fas fa-exclamation-circle font-size-27"></i>
+            <span class="font-weight-bolder font-size-27 ml-2">Not Successful!</span>
+        </div>
+    {% endif %}
+{% endblock %}

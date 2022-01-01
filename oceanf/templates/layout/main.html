@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Site Metas -->
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/Owlhouseousel2/2.3.4/assets/owl.houseousel.min.css"/>
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap" rel="stylesheet"/>
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          rel="stylesheet"/>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/rar.css' %}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div style="position: absolute; bottom: 5px; right: 5px;">
+    {% for notification in notifications %}
+        <div class="toast" id="toast-{{ notification.pk }}">
+            <div class="toast-header">
+                <i class="fas fa-bell"></i>
+                <strong class="mr-auto ml-1"> </strong>
+                <small>{{ notification.date }}</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+                        onclick="notificationDeleted({{ notification.pk }})">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                {{ notification.message }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% include 'layout/navbar.html' %}
+<main class="d-flex justify-content-center pr-5 pl-5">
+    {% block content %}
+    {% endblock %}
+</main>
+<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/Owlhouseousel2/2.3.4/owl.houseousel.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

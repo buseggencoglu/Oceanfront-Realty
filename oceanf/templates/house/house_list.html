@@ -1,0 +1,99 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+<title>house List</title>
+{% endblock %}
+
+{% block content %}
+<style>
+.btn.btn-secondary {
+position:absolute;
+right:0;
+}
+</style>
+<div class="col">
+<div class="house-table-admin">
+    <a href="{% url 'create_house' %}"><button type="submit" class="btn btn-secondary mb-3 crt-btn button4 " style="padding: 1em 1.5em" style="position:absolute; right:0;">Create house</button></a>
+   <br>
+    <h4 style="font-family: 'Times New Roman'; color: #8dca67">Available houses on The System</h4>
+    <div class="house-table rounded">
+    <table class="table mb-3 table-hover table-striped">
+
+    <thead>
+    <th>Image</th>
+    <th>House Name</th>
+    <th>Type</th>
+    <th>Rooms</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th class="text-center" colspan="2">
+    </th>
+    </thead>
+    {% for data in dataset %}
+    {% if data.status == 1 %}
+    <tr>
+        <td>{% if data.image %}<img src="{{data.image.url}}" height="150" width="150">{% endif %}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.type }}</td>
+        <td>{{ data.rooms }}</td>
+        <td>{{ data.price }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.status }}</td>
+        <td>
+            <a href="{% url 'house_update' pk=data.id %}"><button type="submit" class="btn btn-info">Update</button></a>
+        </td>
+        <td>
+            <a href="{% url 'house_delete' pk=data.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+        </td>
+    {% endif %}
+    {% endfor %}
+    </table>
+    </tr>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="house-table-admin">
+    <h4 style="font-family: 'Times New Roman'; color: #8dca67">Unavailable houses on The System</h4>
+    <div class="house-table rounded">
+    <table class="table mb-3 table-hover table-striped">
+    <thead>
+    <th>Image</th>
+    <th>House Name</th>
+    <th>Type</th>
+    <th>Rooms</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th class="text-center" colspan="2">
+       <div style="width: 143px;">
+ </div>
+    </th>
+    </thead>
+    {% for data in dataset %}
+    {% if data.status == 0 %}
+    <tr>
+        <td>{% if data.image %}<img src="{{data.image.url}}" height="150" width="150">{% endif %}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.type }}</td>
+        <td>{{ data.rooms }}</td>
+        <td>{{ data.price }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.status }}</td>
+        <td>
+            <a href="{% url 'house_update' pk=data.id %}"><button type="submit" class="btn btn-info">Update</button></a>
+        </td>
+        <td>
+             <a href="{% url 'house_delete' pk=data.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+        </td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+    </table>
+    </div>
+</div>
+</div>
+{% endblock %}
