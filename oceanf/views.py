@@ -117,36 +117,6 @@ def complete_reservation(request):
     return render(request, 'reservation/reservation_approve.html', context)
 
 
-def house_list_old(request):
-    house = House.objects.all()
-
-    query = request.GET.get('q')
-    if query:
-        house = house.filter(
-            Q(houseName__icontains=query) |
-            Q(model__icontains=query) |
-            Q(numOfSeats__icontains=query) |
-            Q(numOfDoors__icontains=query) |
-            Q(transmission=query) |
-            Q(airconditioner__icontains=query) |
-            Q(price__icontains=query) |
-            Q(status__icontains=query)
-        )
-
-    paginator = Paginator(house, 12)
-    page = request.GET.get('page')
-    try:
-        house = paginator.page(page)
-    except PageNotAnInteger:
-        house = paginator.page(1)
-    except EmptyPage:
-        house = paginator.page(paginator.num_pages)
-    context = {
-        'house': house,
-    }
-    return render(request, 'house/house_list.html', context)
-
-
 def house_list(request):
     context = {}
     user = request.user
@@ -401,77 +371,6 @@ def view_my_reservation_customer(request):
     return render(request, 'reservation/my_reservations.html', {'reservation_list': reservations})
 
 
-@login_required()
-def newhouse(request):
-    new = House.objects.order_by('-id')
-    query = request.GET.get('q')
-    if query:
-        new = new.filter(
-            Q(houseName__icontains=query) |
-            Q(model__icontains=query) |
-            Q(numOfSeats__icontains=query) |
-            Q(numOfDoors__icontains=query) |
-            Q(transmission=query) |
-            Q(airconditioner__icontains=query) |
-            Q(price__icontains=query) |
-            Q(status__icontains=query)
-        )
-
-    paginator = Paginator(new, 12)
-    page = request.GET.get('page')
-    try:
-        new = paginator.page(page)
-    except PageNotAnInteger:
-        new = paginator.page(1)
-    except EmptyPage:
-        new = paginator.page(paginator.num_pages)
-    context = {
-        'house': new,
-    }
-    return render(request, 'new_house.html', context)
-
-
-def like_update(request, id=None):
-    new = House.objects.order_by('-id')
-    like_count = get_object_or_404(House, id=id)
-    like_count.like += 1
-    like_count.save()
-    context = {
-        'house': new,
-    }
-    return render(request, 'new_house.html', context)
-
-
-def popular_house(request):
-    new = House.objects.order_by('-like')
-
-    query = request.GET.get('q')
-    if query:
-        new = new.filter(
-            Q(houseName__icontains=query) |
-            Q(model__icontains=query) |
-            Q(numOfSeats__icontains=query) |
-            Q(numOfDoors__icontains=query) |
-            Q(transmission=query) |
-            Q(airconditioner__icontains=query) |
-            Q(price__icontains=query) |
-            Q(status__icontains=query)
-        )
-
-    paginator = Paginator(new, 12)  # Show 15 contacts per page
-    page = request.GET.get('page')
-    try:
-        new = paginator.page(page)
-    except PageNotAnInteger:
-        new = paginator.page(1)
-    except EmptyPage:
-        new = paginator.page(paginator.num_pages)
-    context = {
-        'house': new,
-    }
-    return render(request, 'new_house.html', context)
-
-
 def contact(request):
     form = MessageForm(request.POST or None)
     if form.is_valid():
@@ -486,39 +385,6 @@ def contact(request):
 
 
 # -----------------Admin Section-----------------
-
-def admin_house_list(request):
-    house = House.objects.order_by('-id')
-
-    query = request.GET.get('q')
-    if query:
-        house = house.filter(
-            Q(houseName__icontains=query) |
-            Q(model__icontains=query) |
-            Q(numOfSeats__icontains=query) |
-            Q(numOfDoors__icontains=query) |
-            Q(transmission=query) |
-            Q(airconditioner__icontains=query) |
-            Q(price__icontains=query) |
-            Q(status__icontains=query)
-        )
-
-    # pagination
-    paginator = Paginator(house, 12)  # Show 15 contacts per page
-    page = request.GET.get('page')
-    try:
-        house = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        house = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        house = paginator.page(paginator.num_pages)
-    context = {
-        'house': house,
-    }
-    return render(request, 'admin/admin_dashboard.html', context)
-
 
 def admin_msg(request):
     msg = PrivateMsg.objects.order_by('-id')
