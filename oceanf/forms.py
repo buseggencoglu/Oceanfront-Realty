@@ -70,7 +70,7 @@ class BranchForm(forms.ModelForm):
 
 class CredithousedForm(forms.Form):
     name = forms.CharField(max_length=50)
-    housed_number = forms.CharField()
+    card_number = forms.CharField()
     expire_date = CardExpiryField()
     ccr = SecurityCodeField()
 

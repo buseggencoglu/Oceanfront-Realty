@@ -39,7 +39,6 @@ class CustomerRegisterForm(UserCreationForm):
     last_name = forms.CharField(max_length=100, help_text='Last Name',widget=forms.TextInput)
     email = forms.EmailField(max_length=150, help_text='Email', widget=forms.EmailInput)
     birthDate = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-    licenseId = forms.IntegerField()
 
     class Meta:
         model = User
